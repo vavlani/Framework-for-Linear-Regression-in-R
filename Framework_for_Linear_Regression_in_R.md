@@ -103,9 +103,15 @@ df <- data.frame(cbind(cty = df$cty, df_x))
 head(df, n=3)
 ```
 
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["cty"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["displ"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["year.2008"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drv.f"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["drv.r"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["fl.d"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["fl.e"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["fl.p"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["fl.r"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["class.compact"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["class.midsize"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["class.minivan"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["class.pickup"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["class.subcompact"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["class.suv"],"name":[16],"type":["dbl"],"align":["right"]}],"data":[{"1":"18","2":"1.8","3":"0","4":"4","5":"1","6":"0","7":"0","8":"0","9":"1","10":"0","11":"1","12":"0","13":"0","14":"0","15":"0","16":"0","_rn_":"1"},{"1":"21","2":"1.8","3":"0","4":"4","5":"1","6":"0","7":"0","8":"0","9":"1","10":"0","11":"1","12":"0","13":"0","14":"0","15":"0","16":"0","_rn_":"2"},{"1":"20","2":"2.0","3":"1","4":"4","5":"1","6":"0","7":"0","8":"0","9":"1","10":"0","11":"1","12":"0","13":"0","14":"0","15":"0","16":"0","_rn_":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+    ## # A tibble: 3 x 16
+    ##     cty displ year.2008   cyl drv.f drv.r  fl.d  fl.e  fl.p  fl.r
+    ## * <dbl> <dbl>     <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+    ## 1    18   1.8         0     4     1     0     0     0     1     0
+    ## 2    21   1.8         0     4     1     0     0     0     1     0
+    ## 3    20   2           1     4     1     0     0     0     1     0
+    ## # ... with 6 more variables: class.compact <dbl>, class.midsize <dbl>,
+    ## #   class.minivan <dbl>, class.pickup <dbl>, class.subcompact <dbl>,
+    ## #   class.suv <dbl>
 
 ### Observations &gt; predictors
 
@@ -166,18 +172,34 @@ nzv <- nearZeroVar(df, saveMetrics = TRUE)
 nzv
 ```
 
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["freqRatio"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["percentUnique"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["zeroVar"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["nzv"],"name":[4],"type":["lgl"],"align":["right"]}],"data":[{"1":"1.083333","2":"8.9743590","3":"FALSE","4":"FALSE","_rn_":"cty"},{"1":"1.050000","2":"14.9572650","3":"FALSE","4":"FALSE","_rn_":"displ"},{"1":"1.000000","2":"0.8547009","3":"FALSE","4":"FALSE","_rn_":"year.2008"},{"1":"1.025316","2":"1.7094017","3":"FALSE","4":"FALSE","_rn_":"cyl"},{"1":"1.207547","2":"0.8547009","3":"FALSE","4":"FALSE","_rn_":"drv.f"},{"1":"8.360000","2":"0.8547009","3":"FALSE","4":"FALSE","_rn_":"drv.r"},{"1":"45.800000","2":"0.8547009","3":"FALSE","4":"TRUE","_rn_":"fl.d"},{"1":"28.250000","2":"0.8547009","3":"FALSE","4":"TRUE","_rn_":"fl.e"},{"1":"3.500000","2":"0.8547009","3":"FALSE","4":"FALSE","_rn_":"fl.p"},{"1":"2.545455","2":"0.8547009","3":"FALSE","4":"FALSE","_rn_":"fl.r"},{"1":"3.978723","2":"0.8547009","3":"FALSE","4":"FALSE","_rn_":"class.compact"},{"1":"4.707317","2":"0.8547009","3":"FALSE","4":"FALSE","_rn_":"class.midsize"},{"1":"20.272727","2":"0.8547009","3":"FALSE","4":"TRUE","_rn_":"class.minivan"},{"1":"6.090909","2":"0.8547009","3":"FALSE","4":"FALSE","_rn_":"class.pickup"},{"1":"5.685714","2":"0.8547009","3":"FALSE","4":"FALSE","_rn_":"class.subcompact"},{"1":"2.774194","2":"0.8547009","3":"FALSE","4":"FALSE","_rn_":"class.suv"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+    ## # A tibble: 16 x 4
+    ##    freqRatio percentUnique zeroVar nzv  
+    ##  *     <dbl>         <dbl> <lgl>   <lgl>
+    ##  1      1.08         8.97  FALSE   FALSE
+    ##  2      1.05        15.0   FALSE   FALSE
+    ##  3      1            0.855 FALSE   FALSE
+    ##  4      1.03         1.71  FALSE   FALSE
+    ##  5      1.21         0.855 FALSE   FALSE
+    ##  6      8.36         0.855 FALSE   FALSE
+    ##  7     45.8          0.855 FALSE   TRUE 
+    ##  8     28.2          0.855 FALSE   TRUE 
+    ##  9      3.5          0.855 FALSE   FALSE
+    ## 10      2.55         0.855 FALSE   FALSE
+    ## 11      3.98         0.855 FALSE   FALSE
+    ## 12      4.71         0.855 FALSE   FALSE
+    ## 13     20.3          0.855 FALSE   TRUE 
+    ## 14      6.09         0.855 FALSE   FALSE
+    ## 15      5.69         0.855 FALSE   FALSE
+    ## 16      2.77         0.855 FALSE   FALSE
 
 ``` r
 # Checking for zero var columns - there are none in our dataset
 nzv[nzv$zeroVar,]
 ```
 
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["freqRatio"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["percentUnique"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["zeroVar"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["nzv"],"name":[4],"type":["lgl"],"align":["right"]}],"data":[],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+    ## # A tibble: 0 x 4
+    ## # ... with 4 variables: freqRatio <dbl>, percentUnique <dbl>,
+    ## #   zeroVar <lgl>, nzv <lgl>
 
 ``` r
 # We want to remove columns where zeroVar is true
@@ -309,11 +331,11 @@ lm_fit
     ## 
     ## No pre-processing
     ## Resampling: Cross-Validated (5 fold) 
-    ## Summary of sample sizes: 187, 187, 188, 187, 187 
+    ## Summary of sample sizes: 188, 187, 187, 189, 185 
     ## Resampling results:
     ## 
-    ##   RMSE     Rsquared   MAE     
-    ##   2.11563  0.7569266  1.447835
+    ##   RMSE      Rsquared   MAE     
+    ##   2.161974  0.7512547  1.451381
     ## 
     ## Tuning parameter 'intercept' was held constant at a value of TRUE
 

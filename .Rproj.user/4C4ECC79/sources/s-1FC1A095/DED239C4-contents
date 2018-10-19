@@ -3,7 +3,7 @@ title: "Framework for linear regression in R"
 author: "V Avlani"
 output: 
   github_document:
-    df_print: paged
+    df_print: tibble
     toc: true
   html_document:
     theme: paper
