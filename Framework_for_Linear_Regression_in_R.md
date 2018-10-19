@@ -2,10 +2,28 @@ Framework for linear regression in R
 ================
 V Avlani
 
+-   [Motivation](#motivation)
+-   [What *won't* be covered here](#what-wont-be-covered-here)
+-   [Dataset for this exercise](#dataset-for-this-exercise)
+-   [Pre-modeling assumptions](#pre-modeling-assumptions)
+    -   [Creating dummy variables](#creating-dummy-variables)
+    -   [Observations &gt; predictors](#observations-predictors)
+    -   [No linear dependencies](#no-linear-dependencies)
+    -   [Remove constant features](#remove-constant-features)
+    -   [Near-zero-variance columns](#near-zero-variance-columns)
+    -   [Multicollinearity](#multicollinearity)
+    -   [Centering & Scaling *(needed sometimes)*](#centering-scaling-needed-sometimes)
+-   [Modeling the linear regression](#modeling-the-linear-regression)
+-   [Evaluating the model](#evaluating-the-model)
+    -   [Mean of residuals = 0](#mean-of-residuals-0)
+    -   [Homoscedasticity or equal variance of error terms](#homoscedasticity-or-equal-variance-of-error-terms)
+    -   [Normality of residuals](#normality-of-residuals)
+-   [Other considerations](#other-considerations)
+
 Motivation
 ----------
 
-This codebook serves as a comprehensive reference for performing a linear regression using R. It includes the steps that you would need to perform in order to perform and validate the results of a linear regression model. There maybe some steps which may not be always be needed but the purpose of this is to be a kind of exhaustive reference page for anything related to linear regression.
+This codebook serves as a reference for performing a linear regression using R. It includes the steps that you would need to perform in order to perform and validate the results of a linear regression model. There maybe some steps which may not be always be needed but the purpose of this is to be a kind of exhaustive reference page for anything related to linear regression.
 
 > *Far better an approximate answer to the right question, which is often vague, than the exact answer to the wrong question, which can always be made precise.* John Tukey
 
@@ -85,14 +103,9 @@ df <- data.frame(cbind(cty = df$cty, df_x))
 head(df, n=3)
 ```
 
-    ##   cty displ year.2008 cyl drv.f drv.r fl.d fl.e fl.p fl.r class.compact
-    ## 1  18   1.8         0   4     1     0    0    0    1    0             1
-    ## 2  21   1.8         0   4     1     0    0    0    1    0             1
-    ## 3  20   2.0         1   4     1     0    0    0    1    0             1
-    ##   class.midsize class.minivan class.pickup class.subcompact class.suv
-    ## 1             0             0            0                0         0
-    ## 2             0             0            0                0         0
-    ## 3             0             0            0                0         0
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["cty"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["displ"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["year.2008"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drv.f"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["drv.r"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["fl.d"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["fl.e"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["fl.p"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["fl.r"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["class.compact"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["class.midsize"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["class.minivan"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["class.pickup"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["class.subcompact"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["class.suv"],"name":[16],"type":["dbl"],"align":["right"]}],"data":[{"1":"18","2":"1.8","3":"0","4":"4","5":"1","6":"0","7":"0","8":"0","9":"1","10":"0","11":"1","12":"0","13":"0","14":"0","15":"0","16":"0","_rn_":"1"},{"1":"21","2":"1.8","3":"0","4":"4","5":"1","6":"0","7":"0","8":"0","9":"1","10":"0","11":"1","12":"0","13":"0","14":"0","15":"0","16":"0","_rn_":"2"},{"1":"20","2":"2.0","3":"1","4":"4","5":"1","6":"0","7":"0","8":"0","9":"1","10":"0","11":"1","12":"0","13":"0","14":"0","15":"0","16":"0","_rn_":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 
 ### Observations &gt; predictors
 
@@ -153,31 +166,18 @@ nzv <- nearZeroVar(df, saveMetrics = TRUE)
 nzv
 ```
 
-    ##                  freqRatio percentUnique zeroVar   nzv
-    ## cty               1.083333     8.9743590   FALSE FALSE
-    ## displ             1.050000    14.9572650   FALSE FALSE
-    ## year.2008         1.000000     0.8547009   FALSE FALSE
-    ## cyl               1.025316     1.7094017   FALSE FALSE
-    ## drv.f             1.207547     0.8547009   FALSE FALSE
-    ## drv.r             8.360000     0.8547009   FALSE FALSE
-    ## fl.d             45.800000     0.8547009   FALSE  TRUE
-    ## fl.e             28.250000     0.8547009   FALSE  TRUE
-    ## fl.p              3.500000     0.8547009   FALSE FALSE
-    ## fl.r              2.545455     0.8547009   FALSE FALSE
-    ## class.compact     3.978723     0.8547009   FALSE FALSE
-    ## class.midsize     4.707317     0.8547009   FALSE FALSE
-    ## class.minivan    20.272727     0.8547009   FALSE  TRUE
-    ## class.pickup      6.090909     0.8547009   FALSE FALSE
-    ## class.subcompact  5.685714     0.8547009   FALSE FALSE
-    ## class.suv         2.774194     0.8547009   FALSE FALSE
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["freqRatio"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["percentUnique"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["zeroVar"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["nzv"],"name":[4],"type":["lgl"],"align":["right"]}],"data":[{"1":"1.083333","2":"8.9743590","3":"FALSE","4":"FALSE","_rn_":"cty"},{"1":"1.050000","2":"14.9572650","3":"FALSE","4":"FALSE","_rn_":"displ"},{"1":"1.000000","2":"0.8547009","3":"FALSE","4":"FALSE","_rn_":"year.2008"},{"1":"1.025316","2":"1.7094017","3":"FALSE","4":"FALSE","_rn_":"cyl"},{"1":"1.207547","2":"0.8547009","3":"FALSE","4":"FALSE","_rn_":"drv.f"},{"1":"8.360000","2":"0.8547009","3":"FALSE","4":"FALSE","_rn_":"drv.r"},{"1":"45.800000","2":"0.8547009","3":"FALSE","4":"TRUE","_rn_":"fl.d"},{"1":"28.250000","2":"0.8547009","3":"FALSE","4":"TRUE","_rn_":"fl.e"},{"1":"3.500000","2":"0.8547009","3":"FALSE","4":"FALSE","_rn_":"fl.p"},{"1":"2.545455","2":"0.8547009","3":"FALSE","4":"FALSE","_rn_":"fl.r"},{"1":"3.978723","2":"0.8547009","3":"FALSE","4":"FALSE","_rn_":"class.compact"},{"1":"4.707317","2":"0.8547009","3":"FALSE","4":"FALSE","_rn_":"class.midsize"},{"1":"20.272727","2":"0.8547009","3":"FALSE","4":"TRUE","_rn_":"class.minivan"},{"1":"6.090909","2":"0.8547009","3":"FALSE","4":"FALSE","_rn_":"class.pickup"},{"1":"5.685714","2":"0.8547009","3":"FALSE","4":"FALSE","_rn_":"class.subcompact"},{"1":"2.774194","2":"0.8547009","3":"FALSE","4":"FALSE","_rn_":"class.suv"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 
 ``` r
 # Checking for zero var columns - there are none in our dataset
 nzv[nzv$zeroVar,]
 ```
 
-    ## [1] freqRatio     percentUnique zeroVar       nzv          
-    ## <0 rows> (or 0-length row.names)
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["freqRatio"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["percentUnique"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["zeroVar"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["nzv"],"name":[4],"type":["lgl"],"align":["right"]}],"data":[],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 
 ``` r
 # We want to remove columns where zeroVar is true
@@ -309,11 +309,11 @@ lm_fit
     ## 
     ## No pre-processing
     ## Resampling: Cross-Validated (5 fold) 
-    ## Summary of sample sizes: 187, 187, 189, 186, 187 
+    ## Summary of sample sizes: 187, 187, 188, 187, 187 
     ## Resampling results:
     ## 
-    ##   RMSE      Rsquared   MAE     
-    ##   2.156971  0.7602477  1.476189
+    ##   RMSE     Rsquared   MAE     
+    ##   2.11563  0.7569266  1.447835
     ## 
     ## Tuning parameter 'intercept' was held constant at a value of TRUE
 
